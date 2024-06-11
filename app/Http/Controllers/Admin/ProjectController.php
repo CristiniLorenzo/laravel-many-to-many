@@ -52,7 +52,7 @@ class ProjectController extends Controller
                 'name'=> 'required|min:4|max:100|unique:projects,name',
                 'client_name'=> 'required|min:1|max:100',
                 'summary'=> 'nullable|min:5',
-                'type_id'=> 'nullables|exists:types,id'
+                'type_id'=> 'nullable|exists:types,id'
             ]
         );
 
@@ -124,7 +124,7 @@ class ProjectController extends Controller
                 ],
                 'client_name'=> 'required|min:1|max:100',
                 'summary'=> 'nullable|min:5',
-                'type_id'=> 'nullables|exists:types,id'
+                'type_id'=> 'nullable|exists:types,id'
             ]
         );
 
