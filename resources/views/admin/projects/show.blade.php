@@ -16,6 +16,17 @@
     </div>
 
     <div>
+        <strong>Technologies</strong>:
+        @if (count($project->technologies) > 0)
+            @foreach ($project->technologies as $technology)
+                {{ $technology->name }}@if (!$loop->last),@endif
+            @endforeach
+        @else
+            NONE
+        @endif
+    </div>
+
+    <div>
         <strong>Created at:</strong> {{ $project->created_at }}
     </div>
 

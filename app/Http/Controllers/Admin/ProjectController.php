@@ -8,6 +8,7 @@ use App\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\Type;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -78,6 +79,8 @@ class ProjectController extends Controller
     {
         // $project = Project::findOrFail($id);
         // dd($project->type);
+        
+
         $data = [
             'project' => $project
         ];
