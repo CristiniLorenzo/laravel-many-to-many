@@ -141,7 +141,8 @@ class ProjectController extends Controller
                 ],
                 'client_name'=> 'required|min:1|max:100',
                 'summary'=> 'nullable|min:5',
-                'type_id'=> 'nullable|exists:types,id'
+                'type_id'=> 'nullable|exists:types,id',
+                'technologies'=> 'nullable|exists:technologies,id',
             ]
         );
 
