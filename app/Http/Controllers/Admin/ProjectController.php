@@ -37,7 +37,8 @@ class ProjectController extends Controller
     {
         $types = Type::all();
         // dd($types);
-        return view('admin.projects.create', compact('types'));    
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));    
     }
 
     /**
@@ -53,7 +54,8 @@ class ProjectController extends Controller
                 'name'=> 'required|min:4|max:100|unique:projects,name',
                 'client_name'=> 'required|min:1|max:100',
                 'summary'=> 'nullable|min:5',
-                'type_id'=> 'nullable|exists:types,id'
+                'type_id'=> 'nullable|exists:types,id',
+                'technologies'=> 'nullable|exists:technologies,id',
             ]
         );
 
@@ -65,6 +67,10 @@ class ProjectController extends Controller
         $newProject->slug = Str::slug($newProject->name, '-');
         // dd($newProject);
         $newProject->save();
+
+        if($request->has('technologies')) {
+            $newProject->technologies()->attach($formData['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', ['project' => $newProject->id]);
     }
@@ -79,7 +85,13 @@ class ProjectController extends Controller
     {
         // $project = Project::findOrFail($id);
         // dd($project->type);
-        
+
+        // aggiunge 
+        // $project->technologies()->attach([1, 2]);
+
+        // fa attach e detach gestendosi da solo
+        // $project->technologies()->sync([1, 2]);
+
 
         $data = [
             'project' => $project
@@ -100,9 +112,11 @@ class ProjectController extends Controller
         $data =[
             'project' => $project
         ];
+        $technologies = Technology::all();
+
 
         $types = Type::all();
-        return view('admin.projects.edit', $data, compact('types'));
+        return view('admin.projects.edit', $data, compact('types', 'technologies'));
     }
 
     /**
@@ -135,6 +149,13 @@ class ProjectController extends Controller
         $formData['slug'] = Str::slug($formData['name'], '-');
         // dd($formData);
         $project->update($formData);
+
+        if($request->has('technologies')) {
+            $project->technologies()->sync($formData['technologies']);
+        } else{
+            $project->technologies()->detach();
+        }
+            
 
         return redirect()->route('admin.projects.show', ['project' => $project->id]);
 
